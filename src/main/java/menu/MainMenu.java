@@ -51,14 +51,14 @@ public class MainMenu extends BaseMenu {
         boolean running = true;
 
         while (running) {
-            clearScreen();
-            centerAscii(ascii());
-            padding();
-            getWriter().println(centerText("Logged in as " + currentUser.getUsername()));
-            padding();
+            getUtility().clearScreen();
+            getUtility().centerAscii(getUtility().ascii());
+            getUtility().padding();
+            getWriter().println(getUtility().centerText("Logged in as " + currentUser.getUsername()));
+            getUtility().padding();
             initializeMenuOptions();
             printMenu();
-            padding();
+            getUtility().padding();
             menuInstructions();
 
             try {

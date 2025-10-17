@@ -28,25 +28,25 @@ public class LoginMenu extends BaseMenu {
 
     public void display() {
         boolean running = true;
-        getWriter().println(getReset()); // Reset colors
-        clearScreen();
+        getWriter().println(getUtility().getReset()); // Reset colors
+        getUtility().clearScreen();
 
-        centerAscii(ascii()); // Ascii art
-        padding();
+        getUtility().centerAscii(getUtility().ascii()); // Ascii art
+        getUtility().padding();
 
         while(running) {
-            padding();
-            String username = centeredInput("Username > ");
-            String password = centeredInput("Password > ", true);
+            getUtility().padding();
+            String username = getUtility().centeredInput("Username > ");
+            String password = getUtility().centeredInput("Password > ", true);
 
             try {
                  currentUser = userManager.login(username, password);
                 if(currentUser != null) {
-                    padding();
+                    getUtility().padding();
                     running = false;
                 } else  {
-                    padding();
-                    getWriter().println(getRed() + centerText("Invalid username or password!") + getReset());
+                    getUtility().padding();
+                    getWriter().println(getUtility().getRed() + getUtility().centerText("Invalid username or password!") + getUtility().getReset());
                 }
             }catch(Exception e) {
                 getWriter().println("An error occurred while logging in" + e.getMessage());

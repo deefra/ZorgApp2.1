@@ -29,10 +29,10 @@ public class MedicationMenu extends BaseMenu {
     protected void handleInput(char key) {
         switch (key) {
             case '1':
-                System.out.println(centerText("case 1"));
+                System.out.println(utility.centerText("case 1"));
                 break;
             case '2':
-                System.out.println(centerText("case 2"));
+                System.out.println(utility.centerText("case 2"));
                 break;
             case 'q':
 
@@ -48,14 +48,14 @@ public class MedicationMenu extends BaseMenu {
         boolean running = true;
 
         while (running) {
-            clearScreen();
-            centerAscii(ascii());
-            padding();
-            getWriter().println(centerText("Medication Menu"));
-            padding();
+            getUtility().clearScreen();
+            getUtility().centerAscii(getUtility().ascii());
+            getUtility().padding();
+            getWriter().println(getUtility().centerText("Medication Menu"));
+            getUtility().padding();
             initializeMenuOptions();
             printMenu();
-            padding();
+            getUtility().padding();
             menuInstructions();
 
             try {

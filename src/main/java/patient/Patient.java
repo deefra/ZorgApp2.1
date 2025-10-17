@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.Period;
 
-class Patient {
+public class Patient {
 
     private int       id;
     private String    surname;
@@ -44,6 +44,10 @@ class Patient {
         }
         double heightM = (double) height / 100;
         return  weight /  (heightM * heightM);
+    }
+
+    public static String getFullName (Patient patient) {
+        return patient.getFirstName() + " " + patient.getSurname();
     }
 
     int getAge() {
