@@ -1,7 +1,5 @@
 package patient;
 
-import menu.BaseMenu;
-import menu.MenuManager;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.terminal.Terminal;
@@ -19,6 +17,7 @@ public class PatientManager {
     private PrintWriter writer;
     private LineReader reader;
     public Utility utility;
+    public Patient currentPatient;
 
     public PatientManager(Terminal terminal) {
         this.terminal = terminal;
@@ -52,6 +51,11 @@ public class PatientManager {
 
     public PrintWriter getWriter() {return writer;}
     public Terminal getTerminal() {return terminal;}
+    public Patient getCurrentPatient() {return currentPatient;}
+
+    public void setCurrentPatient(Patient currentPatient) {
+        this.currentPatient = currentPatient;
+    }
 
     public Patient searchPatientByName (String patientName) {
         String cleanPatientName = patientName.toLowerCase().replace(" ", "");
@@ -103,9 +107,10 @@ public class PatientManager {
     public void displayPartialMatches(List<Patient> partialResults) {
 
         if (partialResults.isEmpty()) {
-            getWriter().println(utility.centerText(utility.getRed() + "No matches found." + utility.getReset()));
+            utility.padding();
+            getWriter().println(utility.centerText(utility.getRed() + "No matches found" + utility.getReset()));
         } else {
-            utility.clearScreen();
+            utility.padding();
             getWriter().println(utility.centerText(utility.getGreen() + "Matches found:" + utility.getReset()));
             utility.padding();
             for (Patient p : partialResults) {
@@ -129,17 +134,89 @@ public class PatientManager {
     }
 
 
-    public void displayDetailedPatient(String centerText, Patient patient) {
+    public void displayDetailedPatient(Patient patient) {
         getWriter().println();
-        getWriter().println(centerText + String.format("%-17s %s", "ID:", patient.getId()));
-        getWriter().println(centerText + String.format("%-17s %s", "Surname:", patient.getSurname()));
-        getWriter().println(centerText + String.format("%-17s %s", "First name:", patient.getFirstName()));
-        getWriter().println(centerText + String.format("%-17s %s", "Date of birth:", patient.getDateOfBirth()));
-        getWriter().println(centerText + String.format("%-17s %d", "Age:", patient.getAge()));
-        getWriter().println(centerText + String.format("%-17s %.1f", "Weight(KG):", patient.getWeight()));
-        getWriter().println(centerText + String.format("%-17s %d", "Height(CM):", patient.getHeight()));
-        getWriter().println(centerText + String.format("%-17s %.1f", "BMI:", patient.getBMI()));
-        getWriter().println(centerText + String.format("%-17s %.1f", "Lung volume(L):", patient.getLungVolume()));
+
+        String line1 = String.format("%20s %-29s", "ID:", patient.getId());
+        String line2 = String.format("%20s %-29s", "Surname:", patient.getSurname());
+        String line3 = String.format("%20s %-29s", "First name:", patient.getFirstName());
+        String line4 = String.format("%20s %-29s", "Date of birth:", patient.getDateOfBirth());
+        String line5 = String.format("%20s %-29s", "Age:", patient.getAge() + " years");
+        String line6 = String.format("%20s %-29s", "Weight:", String.format("%.1f kg", patient.getWeight()));
+        String line7 = String.format("%20s %-29s", "Height:", patient.getHeight() + " cm");
+        String line8 = String.format("%20s %-29s", "BMI:", String.format("%.1f", patient.getBMI()));
+        String line9 = String.format("%20s %-29s", "Lung volume:", String.format("%.1f L", patient.getLungVolume()));
+
+        // Add a few extra spaces to shift the block
+        String extraPadding = "     ";  // Adjust this to move left or right
+
+        getWriter().println(extraPadding + utility.centerText(line1));
+        getWriter().println(extraPadding + utility.centerText(line2));
+        getWriter().println(extraPadding + utility.centerText(line3));
+        getWriter().println(extraPadding + utility.centerText(line4));
+        getWriter().println(extraPadding + utility.centerText(line5));
+        getWriter().println(extraPadding + utility.centerText(line6));
+        getWriter().println(extraPadding + utility.centerText(line7));
+        getWriter().println(extraPadding + utility.centerText(line8));
+        getWriter().println(extraPadding + utility.centerText(line9));
+
         getWriter().println();
+    }
+
+    public void editPatient (Patient patient) {
+        utility.getWriter().println(utility.centerText(utility.getRed() + "Leave empty to keep current value!" + utility.getReset()));
+        utility.padding();
+
+        String newName = utility.centeredInput("New first name > ");
+        if (!newName.isEmpty()) {
+            patient.setFirstname(newName);
+        }
+        utility.padding();
+
+        String newSurname = utility.centeredInput("New surname > ");
+        if (!newSurname.isEmpty()) {
+            patient.setSurname(newSurname);
+        }
+        utility.padding();
+
+        String newDate = utility.centeredInput("Date of birth (YYYY-MM-DD) > ");
+        if (!newDate.isEmpty()) {
+            try {
+                patient.setDateofBirth(LocalDate.parse(newDate));
+            } catch (Exception e) {
+                utility.getWriter().println(utility.centerText(
+                        utility.getRed() + "Invalid date format, keeping current value" + utility.getReset()
+                ));
+            }
+        }
+        utility.padding();
+
+        String newWeight = utility.centeredInput("Weight (kg) > ");
+        if (!newWeight.isEmpty()) {
+            try {
+                patient.setWeight(Double.parseDouble(newWeight));
+            } catch (NumberFormatException e) {
+                utility.getWriter().println(utility.centerText(
+                        utility.getRed() + "Invalid number, keeping current value" + utility.getReset()
+                ));
+            }
+        }
+        utility.padding();
+
+        String newHeight = utility.centeredInput("Height (cm) > ");
+        if (!newHeight.isEmpty()) {
+            try {
+                patient.setHeight(Integer.parseInt(newHeight));
+            } catch (NumberFormatException e) {
+                utility.getWriter().println(utility.centerText(
+                        utility.getRed() + "Invalid number, keeping current value" + utility.getReset()
+                ));
+            }
+        }
+        utility.padding();
+
+        utility.getWriter().println(utility.centerText(
+                utility.getGreen() + "Patient updated successfully!" + utility.getReset()
+        ));
     }
 }
