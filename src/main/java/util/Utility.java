@@ -66,8 +66,7 @@ public class Utility {
     }
 
     public String centeredInput(String prompt, boolean isPassword) {
-        String input = isPassword ? getReader().readLine(centerInput(prompt), '*') : getReader().readLine(centerInput(prompt));
-        return input;
+        return isPassword ? getReader().readLine(centerInput(prompt), '*') : getReader().readLine(centerInput(prompt));
     }
 
     public String centeredInput(String prompt) {

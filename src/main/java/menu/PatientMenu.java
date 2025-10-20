@@ -16,18 +16,19 @@ public class PatientMenu extends BaseMenu {
     private User currentUser;
     private Patient currentPatient;
 
-    public PatientMenu(Terminal terminal, LineReader reader, PrintWriter writer, UserManager userManager, User currentUser) {
+    public PatientMenu(Terminal terminal, LineReader reader, PrintWriter writer, UserManager userManager, PatientManager patientManager) {
         super(terminal, reader, writer);
-        this.patientManager = new PatientManager(getTerminal());
         this.userManager = userManager;
-        this.currentUser = currentUser;
+        this.patientManager = patientManager;
+        this.currentUser = userManager.getCurrentUser();
+        this.currentPatient = patientManager.getCurrentPatient();
     }
 
     @Override
     protected void initializeMenuOptions () {
-        menuOptions.put('1', "Select Patient");
-        menuOptions.put('2', "Display All Patients");
-        menuOptions.put('3', "Remove Patient");
+        menuOptions.put('1', "Patient data");
+//        menuOptions.put('2', "Patient prescriptions");
+//        menuOptions.put('3', "Remove Patient");
         menuOptions.put('Q', "Back");
     }
 
@@ -35,39 +36,32 @@ public class PatientMenu extends BaseMenu {
     protected void handleInput(char key) {
         switch (key) {
             case '1':
-               try {
-                   getUtility().padding();
-                   String nameOrId = getUtility().centeredInput("Enter patient name or ID > ");
-                   currentPatient = patientManager.searchPatient(nameOrId);
+                boolean viewingPatient = true;
+                while (viewingPatient) {
+                    getUtility().clearScreen();
+                    getUtility().padding();
+                    patientManager.displayDetailedPatient(currentPatient);
+                    getUtility().padding();
+                    getWriter().println(getUtility().centerText(getUtility().getGreen() + "[E] Edit Patient [Q] Back" + getUtility().getReset()));
 
-                   if (currentPatient != null) {
-
-                   } else {
-                       patientManager.displayPartialMatches(patientManager.searchPatientsByPartialName(nameOrId));
-                       try {
-                           getTerminal().reader().read();
-                       } catch (IOException e) {
-                           throw new RuntimeException(e);
-                       }
-
-                   }
-               } catch (Exception e) {
-                   throw new RuntimeException(e);
-               }
-
+                    try {
+                        char action = (char) getTerminal().reader().read();
+                        switch (Character.toLowerCase(action)) {
+                            case 'e':
+                                getUtility().padding();
+                                patientManager.editPatient(currentPatient);
+                                break;
+                            case 'q':
+                                viewingPatient = false;
+                                break;
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
                 break;
             case '2':
-                getUtility().clearScreen();
-                getUtility().padding();
-                getWriter().println(getUtility().centerText(getUtility().getRed() + "Start of the list..." + getUtility().getReset()));
-                getUtility().padding();
-                patientManager.displayAllPatients();
-                try {
-                    getWriter().println(getUtility().centerText(getUtility().getGreen() + "Press any key to continue..." + getUtility().getReset()));
-                    getTerminal().reader().read();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+
                 break;
             case 'q':
 
@@ -87,7 +81,7 @@ public class PatientMenu extends BaseMenu {
             getUtility().clearScreen();
             getUtility().centerAscii(getUtility().ascii());
             getUtility().padding();
-            getWriter().println(getUtility().centerText("Patient Menu"));
+            getWriter().println(getUtility().centerText("Selected patient: " + Patient.getFullName(currentPatient)));
             getUtility().padding();
             initializeMenuOptions();
             printMenu();
