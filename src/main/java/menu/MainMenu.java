@@ -38,7 +38,7 @@ public class MainMenu extends BaseMenu {
                 try {
                     getUtility().clearScreen();
                     getUtility().padding();
-                    getWriter().println(getUtility().centerText(getUtility().getRed() + "Type 'quit' to return" + getUtility().getReset()));
+                    getWriter().println(getUtility().centerText(getUtility().getGreen() + "Type 'quit' to return" + getUtility().getReset()));
                     getUtility().padding();
                     String nameOrId = getUtility().centeredInput("Enter patient name or ID > ");
 
@@ -57,7 +57,7 @@ public class MainMenu extends BaseMenu {
                         } else {
                             getUtility().clearScreen();
                             getUtility().padding();
-                            getWriter().println(getUtility().centerText(getUtility().getRed() + "Type 'quit' to return" + getUtility().getReset()));
+                            getWriter().println(getUtility().centerText(getUtility().getGreen() + "Type 'quit' to return" + getUtility().getReset()));
                             // No exact match found, show partial matches
                             patientManager.displayPartialMatches(patientManager.searchPatientsByPartialName(nameOrId));
                             getUtility().padding();

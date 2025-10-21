@@ -147,7 +147,6 @@ public class PatientManager {
         String line8 = String.format("%20s %-29s", "BMI:", String.format("%.1f", patient.getBMI()));
         String line9 = String.format("%20s %-29s", "Lung volume:", String.format("%.1f L", patient.getLungVolume()));
 
-        // Add a few extra spaces to shift the block
         String extraPadding = "     ";  // Adjust this to move left or right
 
         getWriter().println(extraPadding + utility.centerText(line1));
@@ -164,16 +163,16 @@ public class PatientManager {
     }
 
     public void editPatient (Patient patient) {
-        utility.getWriter().println(utility.centerText(utility.getRed() + "Leave empty to keep current value!" + utility.getReset()));
+        utility.getWriter().println(utility.centerText(utility.getGreen() + "Leave empty to keep current value!" + utility.getReset()));
         utility.padding();
 
-        String newName = utility.centeredInput("New first name > ");
+        String newName = utility.centeredInput("First name > ");
         if (!newName.isEmpty()) {
             patient.setFirstname(newName);
         }
         utility.padding();
 
-        String newSurname = utility.centeredInput("New surname > ");
+        String newSurname = utility.centeredInput("Surname > ");
         if (!newSurname.isEmpty()) {
             patient.setSurname(newSurname);
         }
@@ -213,10 +212,5 @@ public class PatientManager {
                 ));
             }
         }
-        utility.padding();
-
-        utility.getWriter().println(utility.centerText(
-                utility.getGreen() + "Patient updated successfully!" + utility.getReset()
-        ));
     }
 }
