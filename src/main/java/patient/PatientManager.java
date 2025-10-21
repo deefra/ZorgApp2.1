@@ -164,7 +164,7 @@ public class PatientManager {
     }
 
     public void editPatient (Patient patient) {
-        utility.getWriter().println(utility.centerText(utility.getRed() + "Leave empty to keep current value!" + utility.getReset()));
+        utility.getWriter().println(utility.centerText(utility.getGreen() + "Leave empty to keep current value!" + utility.getReset()));
         utility.padding();
 
         String newName = utility.centeredInput("New first name > ");

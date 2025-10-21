@@ -1,5 +1,6 @@
 package menu;
 
+import medication.MedicationManager;
 import patient.Patient;
 import patient.PatientManager;
 import user.User;
@@ -13,16 +14,17 @@ import java.io.PrintWriter;
 public class MainMenu extends BaseMenu {
     public final UserManager userManager;
     public PatientManager patientManager;
+    public MedicationManager medicationManager;
     public User currentUser;
     public Patient currentPatient;
 
     public MainMenu(Terminal terminal, LineReader reader, PrintWriter writer, UserManager userManager, User currentUser) {
         super(terminal, reader, writer);
         this.patientManager = new PatientManager(getTerminal());
+        this.medicationManager = new MedicationManager(getTerminal());
         this.userManager = userManager;
         this.currentUser = currentUser;
     }
-
 
     @Override
     protected void initializeMenuOptions () {
@@ -38,7 +40,7 @@ public class MainMenu extends BaseMenu {
                 try {
                     getUtility().clearScreen();
                     getUtility().padding();
-                    getWriter().println(getUtility().centerText(getUtility().getRed() + "Type 'quit' to return" + getUtility().getReset()));
+                    getWriter().println(getUtility().centerText(getUtility().getGreen() + "Type 'quit' to return" + getUtility().getReset()));
                     getUtility().padding();
                     String nameOrId = getUtility().centeredInput("Enter patient name or ID > ");
 
@@ -69,7 +71,7 @@ public class MainMenu extends BaseMenu {
                 }
                 break;
             case '2':
-                MedicationMenu medicationMenu = new MedicationMenu(terminal, reader, writer, userManager, currentUser);
+                MedicationMenu medicationMenu = new MedicationMenu(terminal, reader, writer, userManager, currentUser, medicationManager);
                 medicationMenu.display();
                 break;
             case 'q':
