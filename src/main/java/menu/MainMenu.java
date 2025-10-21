@@ -59,7 +59,7 @@ public class MainMenu extends BaseMenu {
                         } else {
                             getUtility().clearScreen();
                             getUtility().padding();
-                            getWriter().println(getUtility().centerText(getUtility().getRed() + "Type 'quit' to return" + getUtility().getReset()));
+                            getWriter().println(getUtility().centerText(getUtility().getGreen() + "Type 'quit' to return" + getUtility().getReset()));
                             // No exact match found, show partial matches
                             patientManager.displayPartialMatches(patientManager.searchPatientsByPartialName(nameOrId));
                             getUtility().padding();
