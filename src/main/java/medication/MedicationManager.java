@@ -36,10 +36,37 @@ public class MedicationManager {
         }
     }
 
+    Medication getMedication (String medicationNameOrID) {
+        Medication foundMedication = null;
+
+        try {
+            int ID = Integer.parseInt(medicationNameOrID);
+            foundMedication = searchMedicationByID(ID);
+        } catch (NumberFormatException e) {
+            foundMedication = searchMedicationByName(medicationNameOrID);
+        }
+
+        return foundMedication;
+    }
+
+    public Medication searchMedicationByID(int id) {
+        for (Medication m: medications) {
+            if (m.getId()==id) {
+                return m;
+            }
+        } return null;
+    }
+
+    Medication searchMedicationByName (String medicationName) {
+        String cleanMedicationName = medicationName.toLowerCase().replace(" ", "");
+        for(Medication m: medications) {
+            if (cleanMedicationName.equals(m.getName().toLowerCase().replace(" ", ""))){
+                return m;
+            }
+        } return null;
+    }
+
     public void displayAllMedication(Medication medication) {
         writer.println(utility.centerText(medication.getId() + " | " + medication.getName() + " | " + medication.getQuantity()));
-//        writer.println(utility.centerText("ID: " + medication.getId()));
-//        writer.println(utility.centerText("Name: " + medication.getName()));
-//        writer.println(utility.centerText("Quantity: " + medication.getQuantity()));
     }
 }

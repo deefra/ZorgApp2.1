@@ -24,7 +24,8 @@ public class MedicationMenu extends BaseMenu {
     @Override
     public void initializeMenuOptions() {
         menuOptions.put('1', "View medications");
-        menuOptions.put('2', "Option 2");
+        menuOptions.put('2', "Edit medication");
+        menuOptions.put('3', "Add medication");
         menuOptions.put('Q', "Back");
     }
 
@@ -35,10 +36,9 @@ public class MedicationMenu extends BaseMenu {
                 getUtility().clearScreen();
                 boolean viewingMedications = true;
                 while (viewingMedications) {
-                    writer.println(utility.centerText(utility.getGreen() + "ID" +  " | Name | " + "Quantity" + utility.getReset()));
-                    getUtility().padding();
                     medicationManager.getAllMedication();
                     utility.padding();
+                    writer.println(utility.centerText(utility.getGreen() + "ID" +  " | Name | " + "Quantity" + utility.getReset()));
                     writer.println(utility.centerText(utility.getGreen() + "[Q] Back" + utility.getReset()));
                     try {
                         char action = (char) getTerminal().reader().read();

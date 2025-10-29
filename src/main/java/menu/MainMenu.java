@@ -53,7 +53,7 @@ public class MainMenu extends BaseMenu {
 
                         if (currentPatient != null) {
                             patientManager.setCurrentPatient(currentPatient);
-                            PatientMenu patientMenu = new PatientMenu(getTerminal(), getReader(), getWriter(), userManager, patientManager);
+                            PatientMenu patientMenu = new PatientMenu(getTerminal(), getReader(), getWriter(), userManager, patientManager, medicationManager);
                             patientMenu.display();
                             break;
                         } else {

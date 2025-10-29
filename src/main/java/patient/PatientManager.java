@@ -25,28 +25,9 @@ public class PatientManager {
         this.reader = LineReaderBuilder.builder().terminal(terminal).build();
         this.utility = new Utility(terminal, reader, getWriter());
 
-
         patients.add(new Patient(1, "van Puffelen", "Pierre", LocalDate.of(2000, 12, 20), 75.3, 176, 4.5));
         patients.add(new Patient(2, "van Huffelen", "Dierre", LocalDate.of(1980, 12, 5), 99.9, 148, 4.5));
         patients.add(new Patient(3, "van Ruffelen", "Hierre", LocalDate.of(2000, 12, 1), 60.2, 210, 4.5));
-//        patients.add(new Patient(4, "van Puffelen", "Pierre", LocalDate.of(2000, 12, 20), 75.3, 176, 4.5));
-//        patients.add(new Patient(5, "van Huffelen", "Dierre", LocalDate.of(1980, 12, 5), 99.9, 148, 4.5));
-//        patients.add(new Patient(6, "van Ruffelen", "Hierre", LocalDate.of(2000, 12, 1), 60.2, 210, 4.5));
-//        patients.add(new Patient(7, "van Puffelen", "Pierre", LocalDate.of(2000, 12, 20), 75.3, 176, 4.5));
-//        patients.add(new Patient(8, "van Huffelen", "Dierre", LocalDate.of(1980, 12, 5), 99.9, 148, 4.5));
-//        patients.add(new Patient(9, "van Ruffelen", "Hierre", LocalDate.of(2000, 12, 1), 60.2, 210, 4.5));
-//        patients.add(new Patient(10, "van Puffelen", "Pierre", LocalDate.of(2000, 12, 20), 75.3, 176, 4.5));
-//        patients.add(new Patient(11, "van Huffelen", "Dierre", LocalDate.of(1980, 12, 5), 99.9, 148, 4.5));
-//        patients.add(new Patient(12, "van Ruffelen", "Hierre", LocalDate.of(2000, 12, 1), 60.2, 210, 4.5));
-//        patients.add(new Patient(13, "van Puffelen", "Pierre", LocalDate.of(2000, 12, 20), 75.3, 176, 4.5));
-//        patients.add(new Patient(14, "van Huffelen", "Dierre", LocalDate.of(1980, 12, 5), 99.9, 148, 4.5));
-//        patients.add(new Patient(15, "van Ruffelen", "Hierre", LocalDate.of(2000, 12, 1), 60.2, 210, 4.5));
-//        patients.add(new Patient(16, "van Puffelen", "Pierre", LocalDate.of(2000, 12, 20), 75.3, 176, 4.5));
-//        patients.add(new Patient(17, "van Huffelen", "Dierre", LocalDate.of(1980, 12, 5), 99.9, 148, 4.5));
-//        patients.add(new Patient(18, "van Ruffelen", "Hierre", LocalDate.of(2000, 12, 1), 60.2, 210, 4.5));
-//        patients.add(new Patient(19, "van Puffelen", "Pierre", LocalDate.of(2000, 12, 20), 75.3, 176, 4.5));
-//        patients.add(new Patient(20, "van Huffelen", "Dierre", LocalDate.of(1980, 12, 5), 99.9, 148, 4.5));
-//        patients.add(new Patient(21, "van Ruffelen", "Hierre", LocalDate.of(2000, 12, 1), 60.2, 210, 4.5));
     }
 
     public PrintWriter getWriter() {return writer;}
